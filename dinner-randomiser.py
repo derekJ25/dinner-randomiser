@@ -44,9 +44,8 @@ def addOption(choices):
     displayOption(choices);
     
     itemToAdd = input("What option would you like to add: ").strip();
-    # check if option is null or empty, return
     if itemToAdd == None or itemToAdd == "":
-        print();
+        print("\nReturning to menu.\n");
         return; 
     
     if optionIsInFile(choices, itemToAdd):
