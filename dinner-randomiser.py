@@ -8,6 +8,10 @@ def checkForFile(jsonPATH):
         print ("Either file is missing or is not readable, creating file...")
         with open(jsonPath, 'w') as optionFile:
             optionFile.write(json.dumps({}));
+            
+def loadJSONFile(jsonPath):
+    with open(jsonPath, "r") as file:
+        return json.load(file)["choices"];
         
 def printOptions():
     print("---------------------------------");
@@ -24,9 +28,9 @@ def isValidInput(input):
     validInput = ["1", "2", "3", "4", "5", "6", "exit"];
     return True if input.lower() in validInput else False;
 
-def optionIsInFile(optionToAdd):
-    for item in optionToAdd:
-        if item.lower() == optionToAdd.lower():
+def optionIsInFile(choices, optionToAdd):
+    for item in choices:
+        if item.lower().strip() == optionToAdd.lower():
             return True;
     return False;
 
@@ -39,9 +43,14 @@ def randomiseOption(choices):
 def addOption(choices):
     displayOption(choices);
     
-    itemToAdd = input("What option would you like to add: ");
-    if optionIsInFile(itemToAdd):
-        print("Please add an option that does not exist in the file.");
+    itemToAdd = input("What option would you like to add: ").strip();
+    # check if option is null or empty, return
+    if itemToAdd == None or itemToAdd == "":
+        print();
+        return; 
+    
+    if optionIsInFile(choices, itemToAdd):
+        print("Please add an option that does not exist in the file.\n");
     else:
         # add item to the file
         print("add");
@@ -65,7 +74,8 @@ def editOption():
     
     
 if __name__ == "__main__":
-    jsonPath = "dinner-randomiser/dinner-options.json";
+    # jsonPath = "dinner-randomiser/dinner-options.json";
+    jsonPath = "dinner-options.json";
     ADD_OPTION = "1";
     REMOVE_OPTION = "2";
     DISPLAY_OPTION = "3";
@@ -76,9 +86,7 @@ if __name__ == "__main__":
     choices = [];
     
     checkForFile(jsonPath);
-    
-    with open(jsonPath, "r") as file:
-        choices = json.load(file)["choices"];
+    choices = loadJSONFile(jsonPath);
         
     while True:
         printOptions();
