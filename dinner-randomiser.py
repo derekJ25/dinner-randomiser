@@ -43,17 +43,17 @@ def randomiseOption(choices):
 def addOption(choices):
     displayOption(choices);
     
-    itemToAdd = input("What option would you like to add: ").strip();
+    itemToAdd = input("What option would you like to add (Hit enter to go back): ").strip();
     if itemToAdd == None or itemToAdd == "":
         print("\nReturning to menu.\n");
         return; 
     
     if optionIsInFile(choices, itemToAdd):
-        print("Please add an option that does not exist in the file.\n");
+        print("\nPlease add an option that does not exist in the file.\n");
     else:
-        # add item to the file
-        print("add");
-    
+        choices.append(itemToAdd);
+        print(f'{itemToAdd} has been added to the dinner options.')
+        
 def removeOption():
     print("remove");
     
