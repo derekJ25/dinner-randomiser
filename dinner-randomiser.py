@@ -12,6 +12,13 @@ def checkForFile(jsonPATH):
 def loadJSONFile(jsonPath):
     with open(jsonPath, "r") as file:
         return json.load(file)["choices"];
+    
+def saveJSONFile(jsonPath, choices):
+    with open(jsonPath, "w") as file:
+        options = {
+            "choices": choices
+        }
+        file.write(json.dumps(options));
         
 def printOptions():
     print("---------------------------------");
@@ -22,10 +29,11 @@ def printOptions():
     print("3. Display dinner option(s)");
     print("4. Edit a dinner option");
     print("5. Randomise for a dinner option");
-    print("6. Exit");
+    print("6. Save & Exit");
+    print("7. Exit");
     
 def isValidInput(input):
-    validInput = ["1", "2", "3", "4", "5", "6", "exit"];
+    validInput = ["1", "2", "3", "4", "5", "6", "7", "exit"];
     return True if input.lower() in validInput else False;
 
 def optionIsInFile(choices, optionToAdd):
@@ -52,7 +60,7 @@ def addOption(choices):
         print("\nPlease add an option that does not exist in the file.\n");
     else:
         choices.append(itemToAdd);
-        print(f'{itemToAdd} has been added to the dinner options.')
+        print(f'{itemToAdd} has been added to the dinner options.\n')
         
 def removeOption():
     print("remove");
@@ -80,7 +88,8 @@ if __name__ == "__main__":
     DISPLAY_OPTION = "3";
     EDIT_OPTION = "4";
     RANDOMISE_OPTION = "5";
-    QUIT_OPTION = "6";
+    SAVE_EXIT_OPTION = "6";
+    QUIT_OPTION = "7";
     EXIT_OPTION = "exit";
     choices = [];
     
@@ -92,7 +101,10 @@ if __name__ == "__main__":
         userInput = input("Select an option or exit: ");
         print();
         if isValidInput(userInput):
-            if userInput == QUIT_OPTION or userInput.lower() == EXIT_OPTION:
+            if userInput == QUIT_OPTION or userInput.lower() == EXIT_OPTION or userInput == SAVE_EXIT_OPTION:
+                if userInput == SAVE_EXIT_OPTION:
+                    print("Saving dinner choices to file.");
+                    saveJSONFile(jsonPath, choices);
                 sys.exit();
             else:
                 if userInput == ADD_OPTION:
