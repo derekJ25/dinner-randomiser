@@ -2,6 +2,7 @@ import json
 import os
 import random
 import sys
+import constants
     
 def checkForFile(jsonPATH):
     if not (os.path.isfile(jsonPATH) and os.access(jsonPATH, os.R_OK)):
@@ -104,14 +105,7 @@ def displayOption(choices):
 if __name__ == "__main__":
     # jsonPath = "dinner-randomiser/dinner-options.json";
     jsonPath = "dinner-options.json";
-    ADD_OPTION = "1";
-    REMOVE_OPTION = "2";
-    DISPLAY_OPTION = "3";
-    EDIT_OPTION = "4";
-    RANDOMISE_OPTION = "5";
-    SAVE_EXIT_OPTION = "6";
-    QUIT_OPTION = "7";
-    EXIT_OPTION = "exit";
+    
     choices = [];
     
     checkForFile(jsonPath);
@@ -122,20 +116,20 @@ if __name__ == "__main__":
         userInput = input("Select an option or exit: ");
         print();
         if isValidInput(userInput):
-            if userInput == QUIT_OPTION or userInput.lower() == EXIT_OPTION or userInput == SAVE_EXIT_OPTION:
-                if userInput == SAVE_EXIT_OPTION:
+            if userInput == constants.QUIT_OPTION or userInput.lower() == constants.EXIT_OPTION or userInput == constants.SAVE_EXIT_OPTION:
+                if userInput == constants.SAVE_EXIT_OPTION:
                     print("Saving dinner choices to file.");
                     saveJSONFile(jsonPath, choices);
                 print("Program is shutting down.");
                 sys.exit();
             else:
-                if userInput == ADD_OPTION:
+                if userInput == constants.ADD_OPTION:
                     addOption(choices);
-                elif userInput == REMOVE_OPTION:
+                elif userInput == constants.REMOVE_OPTION:
                     removeOption(choices);
-                elif userInput == DISPLAY_OPTION:
+                elif userInput == constants.DISPLAY_OPTION:
                     displayOption(choices);
-                elif userInput == EDIT_OPTION:
+                elif userInput == constants.EDIT_OPTION:
                     editOption(choices);
                 else:
                     randomiseOption(choices);
