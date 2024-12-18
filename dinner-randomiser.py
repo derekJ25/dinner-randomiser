@@ -60,7 +60,7 @@ def addOption(choices):
         print("\nPlease add an option that does not exist in the file.\n");
     else:
         choices.append(itemToAdd);
-        print(f'{itemToAdd} has been added to the dinner options.\n')
+        print(f'\n{itemToAdd} has been added to the dinner options.\n')
         
 def removeOption(choices):
     displayOption(choices);
@@ -83,9 +83,16 @@ def displayOption(choices):
     else:
         print("Sorry. There is nothing to display.")
 
-def editOption():
-    print("edit");
-    
+def editOption(choices):
+    displayOption(choices);
+    editItem = input("What option would you like to edit? ").strip().lower().capitalize();
+    if(optionIsInFile(choices, editItem)):
+        print(f'\nEditing option: {editItem}');
+        newItemName = input(f'What would you like {editItem} now be called? ');
+        choices[choices.index(editItem)] = newItemName;
+        print(f'\nSuccessfully changed {editItem} to {newItemName}.\n');
+    else:
+        print(f'\n{editItem} does not exist as an option.\n');
     
 if __name__ == "__main__":
     # jsonPath = "dinner-randomiser/dinner-options.json";
@@ -122,7 +129,7 @@ if __name__ == "__main__":
                 elif userInput == DISPLAY_OPTION:
                     displayOption(choices);
                 elif userInput == EDIT_OPTION:
-                    editOption();
+                    editOption(choices);
                 else:
                     randomiseOption(choices);
         else:
