@@ -64,14 +64,32 @@ def addOption(choices):
         
 def removeOption(choices):
     displayOption(choices);
-    removeOption = input("Which option would you like to remove? ").strip().lower().capitalize();
+    removeOption = input("Which option would you like to remove (Hit enter to go back): ").strip().lower().capitalize();
+    if removeOption == None or removeOption == "":
+        print("\nReturning to menu.\n");
+        return; 
     
     if(optionIsInFile(choices, removeOption)):
         choices.remove(removeOption);
         print(f'\n{removeOption} has been removed from the dinner options.\n');
     else:
         print(f'\n{removeOption} is not a dinner option in system.\n');
+
+def editOption(choices):
+    displayOption(choices);
+    editItem = input("What option would you like to edit? ").strip().lower().capitalize();
+    if editItem == None or editItem == "":
+        print("\nReturning to menu.\n");
+        return; 
     
+    if(optionIsInFile(choices, editItem)):
+        print(f'\nEditing option: {editItem}');
+        newItemName = input(f'What would you like {editItem} now be called? ');
+        choices[choices.index(editItem)] = newItemName;
+        print(f'\nSuccessfully changed {editItem} to {newItemName}.\n');
+    else:
+        print(f'\n{editItem} does not exist as an option.\n');
+        
 def displayOption(choices):
     if len(choices) > 0:
         print("---------------------------------");
@@ -82,17 +100,6 @@ def displayOption(choices):
         print();
     else:
         print("Sorry. There is nothing to display.")
-
-def editOption(choices):
-    displayOption(choices);
-    editItem = input("What option would you like to edit? ").strip().lower().capitalize();
-    if(optionIsInFile(choices, editItem)):
-        print(f'\nEditing option: {editItem}');
-        newItemName = input(f'What would you like {editItem} now be called? ');
-        choices[choices.index(editItem)] = newItemName;
-        print(f'\nSuccessfully changed {editItem} to {newItemName}.\n');
-    else:
-        print(f'\n{editItem} does not exist as an option.\n');
     
 if __name__ == "__main__":
     # jsonPath = "dinner-randomiser/dinner-options.json";
