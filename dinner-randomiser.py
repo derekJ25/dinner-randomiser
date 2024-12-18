@@ -103,9 +103,7 @@ def displayOption(choices):
         print("Sorry. There is nothing to display.")
     
 if __name__ == "__main__":
-    # jsonPath = "dinner-randomiser/dinner-options.json";
     jsonPath = "dinner-options.json";
-    
     choices = [];
     
     checkForFile(jsonPath);
@@ -136,6 +134,5 @@ if __name__ == "__main__":
         else:
             print("Please select a valid option.\n");
     
-
 # things to do:
 # create ingredient list for those items?
