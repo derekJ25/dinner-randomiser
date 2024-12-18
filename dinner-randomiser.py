@@ -51,7 +51,7 @@ def randomiseOption(choices):
 def addOption(choices):
     displayOption(choices);
     
-    itemToAdd = input("What option would you like to add (Hit enter to go back): ").strip();
+    itemToAdd = input("What option would you like to add (Hit enter to go back): ").strip().lower().capitalize();
     if itemToAdd == None or itemToAdd == "":
         print("\nReturning to menu.\n");
         return; 
@@ -62,8 +62,15 @@ def addOption(choices):
         choices.append(itemToAdd);
         print(f'{itemToAdd} has been added to the dinner options.\n')
         
-def removeOption():
-    print("remove");
+def removeOption(choices):
+    displayOption(choices);
+    removeOption = input("Which option would you like to remove? ").strip().lower().capitalize();
+    
+    if(optionIsInFile(choices, removeOption)):
+        choices.remove(removeOption);
+        print(f'\n{removeOption} has been removed from the dinner options.\n');
+    else:
+        print(f'\n{removeOption} is not a dinner option in system.\n');
     
 def displayOption(choices):
     if len(choices) > 0:
@@ -105,12 +112,13 @@ if __name__ == "__main__":
                 if userInput == SAVE_EXIT_OPTION:
                     print("Saving dinner choices to file.");
                     saveJSONFile(jsonPath, choices);
+                print("Program is shutting down.");
                 sys.exit();
             else:
                 if userInput == ADD_OPTION:
                     addOption(choices);
                 elif userInput == REMOVE_OPTION:
-                    removeOption();
+                    removeOption(choices);
                 elif userInput == DISPLAY_OPTION:
                     displayOption(choices);
                 elif userInput == EDIT_OPTION:
@@ -118,7 +126,7 @@ if __name__ == "__main__":
                 else:
                     randomiseOption(choices);
         else:
-            print("Please select a valid option.\n")
+            print("Please select a valid option.\n");
     
 
 # things to do:
